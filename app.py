@@ -12,14 +12,17 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     # Carregar e processar os dados
-    file_path = 'C:\\Users\\Alan Milan\\Documents\\automatiz\\Base de Dados.xlsx'
+    file_path = 'C:\\Users\\cwb.editor\\Documents\\idle\\dashboardhtml\\Base de Dados.xlsx'
     df = pd.read_excel(file_path, sheet_name='Sheet1')
+
+    graph_img = None  # Inicializa a variável do gráfico
 
     if request.method == 'POST':
         chart_type = request.form.get('chart-type')
         unit = request.form.get('unit')
         operator = request.form.get('operator')
         month = request.form.get('month')
+        filter_option = request.form.get('filter-options')
 
         # Aplicar filtros
         if unit:
@@ -29,7 +32,7 @@ def index():
         if month:
             df = df[df['Mês'] == month]
         
-        # Gerar gráfico
+        # Gerar gráfico com base no tipo selecionado
         fig, ax = plt.subplots()
         
         if chart_type == 'scatter':
@@ -41,16 +44,19 @@ def index():
         elif chart_type == 'pie':
             df.groupby('Unidade')['Vendas Realizadas'].sum().plot(kind='pie', ax=ax)
 
-        # Remover a interface gráfica do matplotlib
+        # Adicionar gráfico baseado na opção de filtro
+        if filter_option and filter_option != "Nenhum":
+            filter_column = filter_option.split(':')[0]
+            df[filter_column].plot(kind='bar', ax=ax, label=filter_column)
+            ax.legend()
+
         plt.close(fig)
-        
+
         # Salvar o gráfico em base64
         img = io.BytesIO()
-        fig.savefig(img, format='png', bbox_inches='tight')  # bbox_inches='tight' para evitar cortes
+        fig.savefig(img, format='png', bbox_inches='tight')
         img.seek(0)
         graph_img = base64.b64encode(img.getvalue()).decode('utf-8')
-    else:
-        graph_img = None
 
     # Gerar tabela HTML
     table = df.to_html(classes='data')
