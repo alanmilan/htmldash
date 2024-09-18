@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#">Início</a></li> <!-- Link para a seção Início -->
+                <li><a href="/gráficos">Gráficos</a></li> <!-- Link para a seção de Gráficos -->
+                <li><a href="/relatorios">Relatórios</a></li> <!-- Link para a seção de Relatórios -->
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <h1>Gráficos</h1>
+
+            <!-- Seção de seleção de tipo de gráfico -->
+            <form method="post" action="/gráficos">
+                <div class="chart-controls">
+                    <label for="chart-type">Escolha o tipo de gráfico:</label>
+                    <select id="chart-type" name="chart-type">
+                        <option value="scatter">Dispersão</option>
+                        <option value="line">Linha</option>
+                        <option value="bar">Barra</option>
+                        <option value="pie">Pizza</option>
+                    </select>
+                    <button type="submit">Atualizar Gráfico</button>
+                </div>
+            </form>
+
+            <!-- Seção dos gráficos -->
+            <div class="graph-section">
+                <img src="data:image/png;base64,{{ graph_img }}" alt="Gráfico" />
+            </div>
+
+            <!-- Seção dos dados -->
+            <div class="table-section">
+                <h2>Dados de Vendas</h2>
+                {{ table|safe }}  <!-- Aqui serão exibidos os dados da tabela -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

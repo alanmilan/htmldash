@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .highlight {
+            background-color: #000000; /* Fundo preto */
+            color: #f0f0f0; /* Texto claro para contraste */
+            border: 1px solid #444; /* Borda escura */
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .important {
+            color: #d9534f; /* Cor do texto importante */
+            font-weight: bold;
+        }
+        .summary {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="#/index.html">Inicio</a></li> <!-- Alterado para Gráficos -->
+                <li><a href="/relatorios">Relatórios</a></li>
+                <li><a href="#">Gráficos</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <h1>Relatórios de Vendas</h1>
+
+            <!-- Seção dos relatórios -->
+            <div class="report-section">
+                <div class="highlight">
+                    <h2>Pontos Importantes</h2>
+                    <p class="important">O total de vendas realizadas neste período foi significativamente maior em comparação com o período anterior.</p>
+                    <p class="important">O operador com o maior número de vendas foi o Operador 1.</p>
+                    <p>As vendas têm mostrado um crescimento consistente ao longo dos meses, com picos notáveis em determinados períodos.</p>
+                </div>
+
+                <div class="summary">
+                    <h2>Resumo dos Dados</h2>
+                    <!-- Exiba o resumo dos dados aqui -->
+                    <pre>{{ summary }}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

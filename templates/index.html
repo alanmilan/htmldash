@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Interativo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/relatorios">Relatórios</a></li>
+                <li><a href="#">Gráficos</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <h1>Dashboard de Vendas</h1>
+
+            <!-- Seção de seleção de tipo de gráfico e filtros -->
+            <form method="post" action="/">
+                <div class="chart-controls">
+                    <label for="chart-type">Escolha o tipo de gráfico:</label>
+                    <select id="chart-type" name="chart-type">
+                        <option value="scatter">Dispersão</option>
+                        <option value="line">Linha</option>
+                        <option value="bar">Barra</option>
+                        <option value="pie">Pizza</option>
+                    </select>
+                </div>
+                
+                <div class="chart-filters">
+                    <label for="unit">Unidade:</label>
+                    <select id="unit" name="unit">
+                        <option value="">Todas</option>
+                        <option value="Unidade A">Unidade A</option>
+                        <option value="Unidade B">Unidade B</option>
+                        <option value="Unidade C">Unidade C</option>
+                    </select>
+                    
+                    <label for="operator">Operador:</label>
+                    <select id="operator" name="operator">
+                        <option value="">Todos</option>
+                        <option value="Operador 1">Operador 1</option>
+                        <option value="Operador 2">Operador 2</option>
+                        <option value="Operador 3">Operador 3</option>
+                    </select>
+
+                    <label for="month">Mês:</label>
+                    <select id="month" name="month">
+                        <option value="">Todos</option>
+                        <option value="Janeiro">Janeiro</option>
+                        <option value="Fevereiro">Fevereiro</option>
+                        <option value="Março">Março</option>
+                    </select>
+                    
+                    <button type="submit">Atualizar Gráfico</button>
+                </div>
+            </form>
+
+            <!-- Seção dos gráficos -->
+            <div class="graph-section">
+                {% if graph_img %}
+                    <img src="data:image/png;base64,{{ graph_img }}" alt="Gráfico" />
+                {% else %}
+                    <p>Selecione as opções e clique em "Atualizar Gráfico" para visualizar.</p>
+                {% endif %}
+            </div>
+
+            <!-- Seção dos dados -->
+            <div class="table-section">
+                <h2>Dados de Vendas</h2>
+                {{ table|safe }}  <!-- Aqui serão exibidos os dados da tabela -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>
